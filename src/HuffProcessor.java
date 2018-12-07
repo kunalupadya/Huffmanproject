@@ -95,12 +95,16 @@ public class HuffProcessor {
 	}
 
 	private void codingHelper(HuffNode root, String str, String[] encodings){
-		if ((root.myLeft == null)&(root.myRight == null){
+		if ((root.myLeft == null)&(root.myRight == null)){
 			encodings[root.myValue] = str;
 			return;
 		}
-		codingHelper(root.myLeft,str+'0', encodings);
-		codingHelper(root.myRight,str+'1', encodings);
+		if (root.myLeft != null) {
+			codingHelper(root.myLeft, str + '0', encodings);
+		}
+		if (root.myRight != null) {
+			codingHelper(root.myRight, str + '1', encodings);
+		}
 	}
 
 	private void writeHeader(HuffNode root, BitOutputStream out){
