@@ -78,7 +78,6 @@ public class HuffProcessor {
 				pq.add(new HuffNode(k, counts[k], null, null));
 			}
 		}
-
 		while (pq.size()>1){
 			HuffNode left = pq.remove();
 			HuffNode right = pq.remove();
@@ -145,12 +144,6 @@ public class HuffProcessor {
 		}
 		HuffNode root = readTreeHeader(in);
 		readCompressedBits(root, in, out);
-//
-//		while (true){
-//			int val = in.readBits(BITS_PER_WORD);
-//			if (val == -1) break;
-//			out.writeBits(BITS_PER_WORD, val);
-//		}
 		out.close();
 	}
 	private HuffNode readTreeHeader(BitInputStream in){
