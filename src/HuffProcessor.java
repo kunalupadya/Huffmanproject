@@ -1,4 +1,5 @@
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 /**
@@ -44,19 +45,19 @@ public class HuffProcessor {
 	 */
 	public void compress(BitInputStream in, BitOutputStream out){
 		int [] counts = readForCounts(in);
+		if (myDebugLevel >= 2){
+			System.out.println(Arrays.asList(counts));
+		}
 		HuffNode root = makeTreeFromCounts(counts);
 		String [] codings = makeCodingsFromTree(root);
+		if (myDebugLevel >= 1){
+			System.out.println(Arrays.asList(codings));
+		}
 		out.writeBits(BITS_PER_INT,HUFF_TREE);
 		writeHeader(root,out);
 		in.reset();
 		writeCompressedBits(codings, in, out);
 		out.close();
-//		while (true){
-//			int val = in.readBits(BITS_PER_WORD);
-//			if (val == -1) break;
-//			out.writeBits(BITS_PER_WORD, val);
-//		}
-//		out.close();
 	}
 	private int[] readForCounts(BitInputStream in){
 		int[] soln = new int[ALPH_SIZE+1];
